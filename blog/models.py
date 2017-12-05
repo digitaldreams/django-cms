@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Category(models.Model):
-    slug = models.CharField(max_length=250, unique=True)
+    slug = models.SlugField(max_length=250, unique=True)
     title = models.CharField(max_length=250, blank=True)
 
     def __str__(self):
