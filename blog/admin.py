@@ -16,5 +16,13 @@ class TagAdmin(admin.ModelAdmin):
     list_display = ['name']
 
 
+class PostAdmin(admin.ModelAdmin):
+    fields = ['title', 'body', 'status']
+    search_fields = ['title', 'body']
+    list_display = ['title', 'status', 'published_at']
+    list_filter = ['status', 'published_at']
+
+
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Tag, TagAdmin)
+admin.site.register(Post, PostAdmin)

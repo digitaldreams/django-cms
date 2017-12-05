@@ -22,10 +22,10 @@ class Post(models.Model):
         ('pending', 'Pending'),
         ('canceled', 'Canceled')
     )
-    title = models.CharField(250, blank=True),
-    body = models.TextField(blank=True),
-    published_at = models.DateTimeField(auto_now_add=True)
+    title = models.CharField(max_length=250, blank=True)
+    body = models.TextField(blank=True)
     status = models.CharField(max_length=100, choices=statuses)
+    published_at = models.DateTimeField(auto_now_add=True)
     categories = models.ManyToManyField(Category)
     tags = models.ManyToManyField(Tag)
 
@@ -36,4 +36,11 @@ class Post(models.Model):
 class Like(models.Model):
     posts = models.ManyToManyField(Post)
     ip = models.CharField(max_length=120)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+
+class Comment(models.Model):
+    user = models.IntegerField(default=None)
+    post = models.ForeignKey(Post)
+    body = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
