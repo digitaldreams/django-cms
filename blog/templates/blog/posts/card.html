@@ -1,0 +1,11 @@
+<div class="row">
+    <div class="card col-sm-12 mb-2">
+        <div class="card-body">
+            <h4 class="card-title"><a href="{% url 'blog:posts.show' post.id %}"> {{post.title | title}}</a></h4>
+            <h6 class="card-subtitle mb-2 text-muted">{{post.published_at | date:'d b y'}}</h6>
+            <p class="card-text">{{post.body |truncatechars:200}}</p>
+            <a href="#" class="card-link">Card link</a>
+            <a href="#" class="card-link">Another link</a>
+        </div>
+    </div>
+</div>
