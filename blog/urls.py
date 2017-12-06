@@ -19,4 +19,5 @@ from . import views
 
 app_name = 'blog'
 urlpatterns = [
+    url('^posts$', views.post_index, name='posts.index'),
 ]
