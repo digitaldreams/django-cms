@@ -1,10 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends '../base.html' %}
+{% block title %}
+{{post.title}}
+{% endblock%}
 
-</body>
-</html>
+{% block content %}
+<article>
+    <header>
+        <h1>{{post.title}}</h1>
+    </header>
+    <p>
+        {{post.body}}
+    </p>
+</article>
+{% for comment in post.comment_set.all %}
+<div class="card mb-2">
+    <div class="card-body">
+        <p class="card-text">
+            {{comment.body}}
+        </p>
+        <footer class="blockquote-footer">{{comment.created_at | date:'f a d M'}} <cite title="Source Title">(Anonymous)</cite></footer>
+
+    </div>
+</div>
+
+{% endfor %}
+<form method="post" action="{% url 'blog:posts.comments.save' post.id %}">
+    {% csrf_token %}
+    <div class="form-group text-right">
+        <textarea class="form-control" name="body" placeholder="Leave a comments"></textarea>
+        <input type="submit" value="Save" class="btn btn-primary mt-2">
+    </div>
+
+</form>
+{% endblock %}
