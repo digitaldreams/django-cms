@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterField(
-            model_name='category',
+            model_name='categories',
             name='slug',
             field=models.SlugField(max_length=250, unique=True),
         ),

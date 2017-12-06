@@ -4,6 +4,12 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 
 
+def category_index(request):
+    categories = get_list_or_404(Category)
+    return render(request, 'blog/categories/index.html', {'categories': categories})
+
+
+
 def post_index(request):
     posts = get_list_or_404(Post)
     return render(request, 'blog/posts/index.html', {'posts': posts})
