@@ -41,6 +41,8 @@ class Like(models.Model):
 
 class Comment(models.Model):
     user = models.IntegerField(default=None)
-    post = models.ForeignKey(Post)
+    # here we assign related_name=comments so that we can able to access this relation
+    # from Post class as Post.comments not Post.comment_set
+    post = models.ForeignKey(Post, related_name='comments')
     body = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)

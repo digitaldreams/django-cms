@@ -5,7 +5,7 @@
 
 {% block content %}
     {% include './card.html' with post=post %}
-{% for comment in post.comment_set.all %}
+{% for comment in post.comments.all %}
 <div class="card mb-2">
     <div class="card-body">
         <p class="card-text">

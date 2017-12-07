@@ -9,9 +9,10 @@ def category_index(request):
     return render(request, 'blog/categories/index.html', {'categories': categories})
 
 
-
 def post_index(request):
-    posts = get_list_or_404(Post)
+    # posts = get_list_or_404(Post)
+    # Only show posts which are published
+    posts = Post.objects.filter(status='published')
     return render(request, 'blog/posts/index.html', {'posts': posts})
 
 
