@@ -1,6 +1,9 @@
 from django.db import models
 from django.core.exceptions import ValidationError, NON_FIELD_ERRORS
 from django.urls import reverse
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
+from django.utils.text import slugify
 
 
 class Category(models.Model):
@@ -31,6 +34,7 @@ class Post(models.Model):
         ('canceled', 'Canceled')
     )
     title = models.CharField(max_length=250, blank=True)
+    slug = models.SlugField(max_length=250, unique=True, null=True)
     body = models.TextField(blank=True)
     status = models.CharField(max_length=100, choices=statuses)
     published_at = models.DateTimeField(auto_now_add=True)
@@ -41,7 +45,7 @@ class Post(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('blog:posts.show', args=[str(self.id)])
+        return reverse('blog:posts.show', args=[str(self.slug)])
 
 
 class Like(models.Model):
@@ -65,3 +69,12 @@ class Comment(models.Model):
         """ This method will validate data before save """
         if len(self.body) < 1:
             raise ValidationError({'body': 'Body is required'})
+
+
+@receiver(pre_save, sender=Post)
+def makeSlug(sender, instance, *args, **kwargs):
+    instance.slug = slugify(instance.title)
+    total = Post.objects.filter(slug=slugify(instance.title)).count()
+    if total:
+        real_total = Post.objects.filter(slug__startswith=slugify(instance.title)).count()
+        instance.slug = instance.slug + "-" + str(real_total)

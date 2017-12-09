@@ -21,6 +21,6 @@ app_name = 'blog'
 urlpatterns = [
     url('^categories/$', views.category_index, name='categories.index'),
     url('^posts$', views.post_index, name='posts.index'),
-    url('^posts/(?P<post_id>[0-9]+)$', views.post_show, name='posts.show'),
+    url('^posts/(?P<slug>[a-z0-9]+(?:-[a-z0-9]+)*)$', views.post_show, name='posts.show'),
     url('^posts/(?P<post_id>[0-9]+)/comments/$', views.comment_save, name='posts.comments.save'),
 ]

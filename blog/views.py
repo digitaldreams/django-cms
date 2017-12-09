@@ -17,8 +17,8 @@ def post_index(request):
     return render(request, 'blog/posts/index.html', {'posts': posts})
 
 
-def post_show(request, post_id):
-    post = get_object_or_404(Post, pk=post_id)
+def post_show(request, slug):
+    post = Post.objects.get(slug=slug)
     return render(request, 'blog/posts/show.html', {'post': post})
 
 
