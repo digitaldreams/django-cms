@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.exceptions import ValidationError, NON_FIELD_ERRORS
 
 
 class Category(models.Model):
@@ -21,7 +22,7 @@ class Post(models.Model):
     #  Model specific features e.g. ordering, db_table, indexes,permissions, get_latest_by, abstract are defined here as
     # Attribute. We can not define this as Model attribute.
     class Meta:
-        ordering=['-published_at']
+        ordering = ['-published_at']
 
     statuses = (
         ('published', 'Published'),
@@ -55,3 +56,8 @@ class Comment(models.Model):
     post = models.ForeignKey(Post, related_name='comments')
     body = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def clean(self):
+        """ This method will validate data before save """
+        if len(self.body) < 1:
+            raise ValidationError({'body': 'Body is required'})
