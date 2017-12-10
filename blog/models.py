@@ -61,7 +61,7 @@ class Comment(models.Model):
     # limit_choices_to keyword are also used here. Which is a filter for a relationship
     # to_field keyword are used to specify foreign_key name. By default Django will use PK
 
-    post = models.ForeignKey(Post, related_name='comments')
+    post = models.ForeignKey(Post, related_name='comments',on_delete=models.CASCADE)
     body = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 

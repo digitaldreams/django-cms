@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url, include
+from django.urls import path
 from django.contrib import admin
 from . import views
 
@@ -21,6 +22,7 @@ app_name = 'blog'
 urlpatterns = [
     url('^categories/$', views.category_index, name='categories.index'),
     url('^posts$', views.post_index, name='posts.index'),
-    url('^posts/(?P<slug>[a-z0-9]+(?:-[a-z0-9]+)*)$', views.post_show, name='posts.show'),
+    #url('posts/(?P<slug>[a-z0-9]+(?:-[a-z0-9]+)*)', views.post_show, name='posts.show'),
+    path('posts/<slug:slug>', views.post_show, name='posts.show'),
     url('^posts/(?P<post_id>[0-9]+)/comments/$', views.comment_save, name='posts.comments.save'),
 ]
